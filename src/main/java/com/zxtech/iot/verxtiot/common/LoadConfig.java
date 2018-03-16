@@ -22,19 +22,13 @@ public class LoadConfig {
 		queriesProps.load(queriesInputStream);
 		queriesInputStream.close();
 
-		json.put("http.server.port", Integer.parseInt(queriesProps.getProperty("http.server.port")));
-
-		json.put("driver_class", queriesProps.getProperty("jdbc.driver_class"));
-		json.put("url", queriesProps.getProperty("jdbc.url"));
-		json.put("user", queriesProps.getProperty("jdbc.username"));
-		json.put("password", queriesProps.getProperty("jdbc.password"));
-		json.put("max_pool_size", Integer.parseInt(queriesProps.getProperty("jdbc.max_pool_size")));
-
-		json.put("redis.cache.host", queriesProps.getProperty("redis.cache.host"));
+		queriesProps.forEach((key, val)->{
+			json.put(key.toString(), val.toString());
+		});
 		
-		json.put("web.stub.host", queriesProps.getProperty("web.stub.host"));
-		json.put("web.stub.port", Integer.parseInt(queriesProps.getProperty("web.stub.port")));
-		json.put("web.stub.ft.err", queriesProps.getProperty("web.stub.ft.err"));
+		json.put("http.server.port", Integer.parseInt(json.getString("http.server.port")));
+		json.put("max_pool_size", Integer.parseInt(json.getString("max_pool_size")));
+		json.put("web.stub.port", Integer.parseInt(json.getString("web.stub.port")));
 
 		return json;
 	}

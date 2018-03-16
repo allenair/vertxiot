@@ -87,12 +87,25 @@ public class HttpServerVerticle extends AbstractVerticle {
 	}
 
 	private void elData(RoutingContext context) {
+		if(context.getBody().length()<1) {
+			apiResponse(context, 400, "result", "ERR: wrong request");
+			return;
+		}
+		
 		JsonObject page = context.getBodyAsJson();
-//		sendMessage(context, this.SERVICE_QUEUE, page, "el-data");
+		TransferElevatorParameter parameter = new TransferElevatorParameter(page);
+		if(IotParseTools.checkElParameter(parameter)) {
+			// 如果接口检查正确则直接返回ok，后续错误与接口数据无关
+			apiResponse(context, 200, "result", "OK");
+			
+			elService.handler(parameter);
+		}else {
+			apiResponse(context, 400, "result", "ERR: wrong parameter format");
+		}
 	}
 	
 	private void showIndex(RoutingContext context) {
-		apiResponse(context, 200, "result", "你好！");
+		apiResponse(context, 200, "result", "你好，欢迎访问ESSIOT！");
 	}
 
 	private void apiResponse(RoutingContext context, int statusCode, String jsonField, String jsonData) {

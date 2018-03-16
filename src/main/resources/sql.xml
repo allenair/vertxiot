@@ -23,4 +23,20 @@
 	        ]]>
 	</sqlElement>
 
+	<sqlElement key="up_hard_collection#insert" author="allen">  
+		<![CDATA[ 
+			INSERT INTO up_hard_collection(
+				up_time, elevator_id, parameter_str, hard_time, electric_flag, people_flag, room_electric_flag, room_maintain_flag, top_electric_flag, top_maintain_flag, alarm, err_info)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+	        ]]>
+	</sqlElement>
+	
+	<sqlElement key="up_hard_analysis#insert" author="allen">  
+		<![CDATA[ 
+			INSERT INTO up_hard_analysis(
+				up_time, elevator_code, err, nav, ins, run, do_p, dol, dw, dcl, dz, efo, cb, up, down, fl, cnt, ddfw, hxxh, es, se, dfc, tci, ero, lv1, lv2, ls1, ls2, dob, dcb, lrd, dos, efk, pks, rdol, rdcl, rdob, rdcb, others, electric_flag, people_flag, room_electric_flag, room_maintain_flag, top_electric_flag, top_maintain_flag, alarm, maintenance, show_fl, err_info, board_type, rear_en, rdoo, logic_err, show_left, show_right, last_count, total_time, driver_err, logic_lock, sys_model, xh_time, arm_code, dsp_code, ver_code, safe_circle, open_fault, close_fault, up_switch, down_switch, stop_fault, lock_broken, speed_fault, go_top, go_down, driver_fault, logic_fault, logic_status)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+	        ]]>
+	</sqlElement>
+	
 </sqls>

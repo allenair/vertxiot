@@ -38,4 +38,43 @@ public class RestClientTools {
 			logger.error("Server is Error!!! err is {}", err.getMessage());
 		});
 	}
+	
+	public void sendElErrorInfo(String hardCode, String errorCode) {
+		JsonObject json = new JsonObject();
+		json.put("hardCode", hardCode);
+		json.put("errorCode", errorCode);
+		
+		int port = this.config.getInteger("web.stub.port");
+		String host = this.config.getString("web.stub.host");
+		String requestURI = this.config.getString("web.stub.el.err") ;
+		
+		HttpRequest<Buffer> req = this.webClient.post(port, host, requestURI);
+		req.putHeader("Content-Type", "application/json;charset=UTF-8").rxSendJsonObject(json).subscribe(resp -> {
+			if(resp.statusCode()!=200) {
+				logger.error("Server is Error!!! statusCode is {}, content is {}", resp.statusCode(), resp.bodyAsString());
+			}
+		}, err -> {
+			logger.error("Server is Error!!! err is {}", err.getMessage());
+		});
+	}
+	
+	public void callElFix(String hardCode, String errorDescript, String peopleFlag) {
+		JsonObject json = new JsonObject();
+		json.put("hardCode", hardCode);
+		json.put("errorDescript", errorDescript);
+		json.put("peopleFlag", peopleFlag);
+		
+		int port = this.config.getInteger("web.stub.port");
+		String host = this.config.getString("web.stub.host");
+		String requestURI = this.config.getString("web.stub.el.callfix") ;
+		
+		HttpRequest<Buffer> req = this.webClient.post(port, host, requestURI);
+		req.putHeader("Content-Type", "application/json;charset=UTF-8").rxSendJsonObject(json).subscribe(resp -> {
+			if(resp.statusCode()!=200) {
+				logger.error("Server is Error!!! statusCode is {}, content is {}", resp.statusCode(), resp.bodyAsString());
+			}
+		}, err -> {
+			logger.error("Server is Error!!! err is {}", err.getMessage());
+		});
+	}
 }

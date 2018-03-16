@@ -28,7 +28,6 @@ public class FtDaoImpl {
 		array.add(parameter.getParameterStr());
 		array.add(parameter.getTime());
 		
-//		return Completable.never();
 		return jdbcClient.rxUpdateWithParams(sqlMap.get("up_hard_collection_ft#insert"), array).toCompletable();
 	}
 
@@ -70,7 +69,6 @@ public class FtDaoImpl {
 		array.add(analyBean.getInteger("run_time"));
 		array.add(analyBean.getString("all_data"));
 
-//		return Completable.never();
 		return jdbcClient.rxUpdateWithParams(sqlMap.get("up_hard_analysis_ft#insert"), array).toCompletable();
 	}
 }
