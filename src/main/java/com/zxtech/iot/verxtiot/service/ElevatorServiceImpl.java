@@ -96,7 +96,6 @@ public class ElevatorServiceImpl {
 				for (String errorCode : errorCodeList) {
 					restApiClient.callElFix(analyBean.getString("elevator_code"), errorDescriptMap.get(errorCode), analyBean.getString("people_flag"));
 					RedisUtil.set("call-hard-code:" + analyBean.getString("elevator_code"), errorCode, 1800);
-					logger.info("=========IOT=RULE=RETURN========"+errorCode);
 				}
 			}else {
 				RedisUtil.del("call-hard-code:" + analyBean.getString("elevator_code"));
