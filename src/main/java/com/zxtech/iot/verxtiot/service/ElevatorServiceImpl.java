@@ -68,14 +68,16 @@ public class ElevatorServiceImpl {
 	public void handler(TransferElevatorParameter parameter){
 		JsonObject analyBean = IotParseTools.getAnalysisElBean(parameter);
 
-		Completable coldb = elevatorDao.insertCollectDb(parameter);
-		Completable analydb = elevatorDao.insertAnalysisDb(analyBean);
-		coldb.andThen(analydb).subscribe(() -> {
-			dealData(analyBean);
-			
-		}, err -> {
-			logger.error("EL:{}, Some Errors happen {}", parameter.getElevatorId(), err.getMessage());
-		});
+//		Completable coldb = elevatorDao.insertCollectDb(parameter);
+//		Completable analydb = elevatorDao.insertAnalysisDb(analyBean);
+//		coldb.andThen(analydb).subscribe(() -> {
+//			dealData(analyBean);
+//		}, err -> {
+//			logger.error("EL:{}, Some Errors happen {}", parameter.getElevatorId(), err.getMessage());
+//		});
+		
+		logger.info("EL=Data>> "+parameter.toJson().encode());
+		dealData(analyBean);
 	}
 	
 	private void dealData(JsonObject analyBean) {
