@@ -19,6 +19,7 @@ public class HttpAccessVerticle extends BaseVerticle {
 	@Override
 	public void start(Future<Void> startFuture) throws Exception {
 		super.init();
+		logger.info("=====HTTP verticel start======");
 		Router router = registerRouter();
 
 		HttpServer server = vertx.createHttpServer();

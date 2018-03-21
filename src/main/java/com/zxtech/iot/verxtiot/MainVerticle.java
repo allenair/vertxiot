@@ -20,6 +20,8 @@ public class MainVerticle extends AbstractVerticle {
 		Single<String> httpDep = vertx.rxDeployVerticle(HttpAccessVerticle.class.getName());
 //		Single<String> mqttDep = vertx.rxDeployVerticle(MqttAccessVerticle.class.getName());
 		Single<String> mqttDep = vertx.rxDeployVerticle(MqttEclipse.class.getName());
+		
+//		Single<String> mqttDep = Single.<String>just("11");
 
 		httpDep.flatMap(id -> {
 			return mqttDep;

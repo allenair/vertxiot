@@ -27,16 +27,21 @@ public class FtServiceImpl {
 	public void handler(TransferElevatorParameter parameter) {
 		JsonObject analyBean = IotParseTools.getAnalysisFtBean(parameter);
 
-		Completable coldb = ftDao.insertCollectDb(parameter);
-		Completable analydb = ftDao.insertAnalysisDb(analyBean);
-		coldb.andThen(analydb).subscribe(() -> {
-			if (analyBean.getInteger("error_code") > 0) {
-				restApiClient.sendFtErrorInfo(analyBean);
-			}
-
-		}, err -> {
-			logger.error("FT:{}, Some Errors happen {}", parameter.getElevatorId(), err.getMessage());
-		});
+//		Completable coldb = ftDao.insertCollectDb(parameter);
+//		Completable analydb = ftDao.insertAnalysisDb(analyBean);
+//		coldb.andThen(analydb).subscribe(() -> {
+//			if (analyBean.getInteger("error_code") > 0) {
+//				restApiClient.sendFtErrorInfo(analyBean);
+//			}
+//		}, err -> {
+//			logger.error("FT:{}, Some Errors happen {}", parameter.getElevatorId(), err.getMessage());
+//		});
+		
+		logger.info("FT=Data>> "+parameter.toJson().encode());
+		if (analyBean.getInteger("error_code") > 0) {
+			restApiClient.sendFtErrorInfo(analyBean);
+		}
+		
 	}
 
 	

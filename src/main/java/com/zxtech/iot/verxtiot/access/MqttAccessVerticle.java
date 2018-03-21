@@ -17,10 +17,11 @@ public class MqttAccessVerticle extends BaseVerticle {
 	@Override
 	public void start(Future<Void> startFuture) throws Exception {
 		super.init();
+		logger.info("=====Vertx mqtt verticel start======");
+		
 		MqttClient mqttClientFt = MqttClient.create(vertx);
 		MqttClient mqttClientEl = MqttClient.create(vertx);
 
-		
 		mqttClientFt.publishHandler(message -> {
 			this.ftData(this.getBeanByJson(message));
 		});
