@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -23,14 +25,21 @@ public class LoadConfig {
 		queriesInputStream.close();
 
 		queriesProps.forEach((key, val)->{
-			json.put(key.toString(), val.toString());
+			if(isInteger(val.toString())) {
+				json.put(key.toString(), Integer.parseInt(val.toString()));
+			}else {
+				json.put(key.toString(), val.toString());
+			}
+			
 		});
-		
-		json.put("http.server.port", Integer.parseInt(json.getString("http.server.port")));
-		json.put("max_pool_size", Integer.parseInt(json.getString("max_pool_size")));
-		json.put("web.stub.port", Integer.parseInt(json.getString("web.stub.port")));
 
 		return json;
+	}
+	
+	private boolean isInteger(String str) {
+		if(StringUtils.isBlank(str))
+			return false;
+		return Pattern.matches("[0-9]+", str.trim());
 	}
 	
 	@SuppressWarnings("unchecked")
