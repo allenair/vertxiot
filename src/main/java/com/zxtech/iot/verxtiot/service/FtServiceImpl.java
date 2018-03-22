@@ -39,7 +39,7 @@ public class FtServiceImpl {
 		
 		logger.info("FT=Data>> "+parameter.toJson().encode());
 		if (analyBean.getInteger("error_code") > 0) {
-			restApiClient.sendFtErrorInfo(analyBean);
+//			restApiClient.sendFtErrorInfo(analyBean);
 		}
 		
 	}

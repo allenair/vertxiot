@@ -96,7 +96,7 @@ public class ElevatorServiceImpl {
 			List<String> errorCodeList = isSendAlarm(analyBean, lastAnalyBean);
 			if(errorCodeList.size()>0){
 				for (String errorCode : errorCodeList) {
-					restApiClient.callElFix(analyBean.getString("elevator_code"), errorDescriptMap.get(errorCode), analyBean.getString("people_flag"));
+//					restApiClient.callElFix(analyBean.getString("elevator_code"), errorDescriptMap.get(errorCode), analyBean.getString("people_flag"));
 					RedisUtil.set("call-hard-code:" + analyBean.getString("elevator_code"), errorCode, 1800);
 				}
 			}else {
@@ -225,7 +225,7 @@ public class ElevatorServiceImpl {
 
 		if (errorCodeList.size() > 0) {
 			for (String errorCode : errorCodeList) {
-				restApiClient.sendElErrorInfo(analyBean.getString("elevator_code"), errorCode);
+//				restApiClient.sendElErrorInfo(analyBean.getString("elevator_code"), errorCode);
 			}
 		}
 	}

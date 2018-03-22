@@ -9,7 +9,7 @@
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
-
+<!--  
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
 		<file>
 			${LOG_HOME}/myApp.log
@@ -21,7 +21,7 @@
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
-
+-->
 	<appender name="ROLLFILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_HOME}/mylog.log</file>
