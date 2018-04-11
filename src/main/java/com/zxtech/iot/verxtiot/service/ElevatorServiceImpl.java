@@ -68,13 +68,13 @@ public class ElevatorServiceImpl {
 	public void handler(TransferElevatorParameter parameter){
 		JsonObject analyBean = IotParseTools.getAnalysisElBean(parameter);
 
-//		Completable coldb = elevatorDao.insertCollectDb(parameter);
-//		Completable analydb = elevatorDao.insertAnalysisDb(analyBean);
-//		coldb.andThen(analydb).subscribe(() -> {
-//			dealData(analyBean);
-//		}, err -> {
-//			logger.error("EL:{}, Some Errors happen {}", parameter.getElevatorId(), err.getMessage());
-//		});
+		Completable coldb = elevatorDao.insertCollectDb(parameter);
+		Completable analydb = elevatorDao.insertAnalysisDb(analyBean);
+		coldb.andThen(analydb).subscribe(() -> {
+			dealData(analyBean);
+		}, err -> {
+			logger.error("EL:{}, Some Errors happen {}", parameter.getElevatorId(), err.getMessage());
+		});
 		
 		logger.info("EL=Data>> "+parameter.toJson().encode());
 		dealData(analyBean);
@@ -96,7 +96,7 @@ public class ElevatorServiceImpl {
 			List<String> errorCodeList = isSendAlarm(analyBean, lastAnalyBean);
 			if(errorCodeList.size()>0){
 				for (String errorCode : errorCodeList) {
-//					restApiClient.callElFix(analyBean.getString("elevator_code"), errorDescriptMap.get(errorCode), analyBean.getString("people_flag"));
+					restApiClient.callElFix(analyBean.getString("elevator_code"), errorDescriptMap.get(errorCode), analyBean.getString("people_flag"));
 					RedisUtil.set("call-hard-code:" + analyBean.getString("elevator_code"), errorCode, 1800);
 				}
 			}else {
@@ -225,7 +225,7 @@ public class ElevatorServiceImpl {
 
 		if (errorCodeList.size() > 0) {
 			for (String errorCode : errorCodeList) {
-//				restApiClient.sendElErrorInfo(analyBean.getString("elevator_code"), errorCode);
+				restApiClient.sendElErrorInfo(analyBean.getString("elevator_code"), errorCode);
 			}
 		}
 	}
@@ -252,7 +252,6 @@ public class ElevatorServiceImpl {
 		boolean flagE64 = "E64".equalsIgnoreCase(analyBean.getString("driver_fault")); //211
 		boolean flagE46 = "E46".equalsIgnoreCase(analyBean.getString("driver_fault")); //212
 		boolean flagE47 = "E47".equalsIgnoreCase(analyBean.getString("driver_fault")); //213
-//		boolean flagP8 = "1".equalsIgnoreCase(analyBean.getNav()); //216
 		boolean flagP8 = isContinueSeconds(analyBean, "P8", analyBean.getString("nav"), 20); // 216
 		
 		boolean flagP377_500 = isContinueSeconds(analyBean, "P377", analyBean.getString("open_fault"), 500); //217

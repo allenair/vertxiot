@@ -20,19 +20,18 @@ public class MainVerticle extends AbstractVerticle {
 	public void start(Future<Void> startFuture) throws Exception {
 		logger.info("---START---");
 		Single<String> httpDep = vertx.rxDeployVerticle(HttpAccessVerticle.class.getName());
+//		Single<String> httpDep = Single.<String>just("11");
+		
 //		Single<String> mqttDep = vertx.rxDeployVerticle(MqttAccessVerticle.class.getName());
 //		Single<String> mqttDep = vertx.rxDeployVerticle(MqttEclipse.class.getName());
+		Single<String> mqttDep = Single.<String>just("temp");
 		
-//		Single<String> serviceDep = vertx.rxDeployVerticle(ServiceVerticle.class.getName());
-		
-//		Single<String> httpDep = Single.<String>just("11");
-		Single<String> mqttDep = Single.<String>just("11");
-		Single<String> serviceDep = Single.<String>just("11");
+		Single<String> tcpDep = Single.<String>just("temp");
 
 		httpDep.flatMap(id -> {
 			return mqttDep;
 		}).flatMap(id->{
-			return serviceDep;
+			return tcpDep;
 		}).subscribe(id -> {
 			startFuture.complete();
 			logger.info("---DEPLOYED---");

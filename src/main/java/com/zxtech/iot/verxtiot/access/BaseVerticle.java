@@ -30,7 +30,7 @@ public abstract class BaseVerticle extends AbstractVerticle {
 	
 	protected JsonObject ftData(TransferElevatorParameter parameter) {
 		if(IotParseTools.checkFtParameter(parameter)) {
-//			ftService.handler(parameter);
+			ftService.handler(parameter);
 			vertx.<String>rxExecuteBlocking(handler->{
 				ftService.handler(parameter);
 			}, false).subscribe();
@@ -44,7 +44,7 @@ public abstract class BaseVerticle extends AbstractVerticle {
 
 	protected JsonObject elData(TransferElevatorParameter parameter) {
 		if(IotParseTools.checkElParameter(parameter)) {
-//			elService.handler(parameter);
+			elService.handler(parameter);
 			vertx.<String>rxExecuteBlocking(handler->{
 				elService.handler(parameter);
 			}, false).subscribe();

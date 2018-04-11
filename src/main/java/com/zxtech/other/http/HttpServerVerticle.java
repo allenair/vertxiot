@@ -1,4 +1,4 @@
-package com.zxtech.iot.verxtiot.http;
+package com.zxtech.other.http;
 
 import java.util.Map;
 

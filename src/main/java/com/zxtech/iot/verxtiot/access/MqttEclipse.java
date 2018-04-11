@@ -21,8 +21,6 @@ public class MqttEclipse extends BaseVerticle {
 	public void start() throws Exception {
 		super.init();
 		logger.info("=====Eclipse mqtt verticel start======");
-//		ftsub("base-id-ft", "/iotdata/ft/+");  
-//		elsub("base-id-el", "/iotdata/el/+");  
 		runsub("base-id-client", new String[]{"/iotdata/ft/+","/iotdata/el/+"});
 	}
 	
@@ -38,38 +36,19 @@ public class MqttEclipse extends BaseVerticle {
 		return mqttClient;
     }  
       
-//    private void ftsub(String clientId, String topic) throws MqttException{  
-//        MqttClient mqttClient = connect(clientId);  
-//        if(mqttClient != null){  
-//        	mqttClient.subscribe(topic, 0, (top, msg)->{
-//              	this.ftData(this.getBeanByJson(new String(msg.getPayload(),"UTF-8")));
-//               });
-//        }  
-//    }  
-//    private void elsub(String clientId, String topic) throws MqttException{  
-//        MqttClient mqttClient = connect(clientId);  
-//        if(mqttClient != null){  
-//        	mqttClient.subscribe(topic, 0, (top, msg)->{
-//              	this.elData(this.getBeanByJson(new String(msg.getPayload(),"UTF-8")));
-//               });
-//        }  
-//    }  
-    
     private void runsub(String clientId, String[] topic) throws MqttException{  
-    	int[] qos= {0,0};
+    		int[] qos= {0,0};
         MqttClient mqttClient = connect(clientId);  
         IMqttMessageListener ftlis = new IMqttMessageListener() {
 			@Override
 			public void messageArrived(String topic, MqttMessage message) throws Exception {
 				ftData(getBeanByJson(new String(message.getPayload(),"UTF-8")));
-//				sendByEventBus("/ftdata", new String(message.getPayload(),"UTF-8"));
 			}
 		};
 		IMqttMessageListener ellis = new IMqttMessageListener() {
 			@Override
 			public void messageArrived(String topic, MqttMessage message) throws Exception {
 				elData(getBeanByJson(new String(message.getPayload(),"UTF-8")));
-//				sendByEventBus("/eldata", new String(message.getPayload(),"UTF-8"));
 			}
 		};
 		IMqttMessageListener[] listArr = {ftlis, ellis};
@@ -86,10 +65,4 @@ public class MqttEclipse extends BaseVerticle {
 		}
 		return parameter;
 	}
-    
-    private void sendByEventBus(String address, String msgBody) {
-//    	vertx.eventBus().rxSend(type, msgBody).subscribe();
-    	vertx.eventBus().publish(address, msgBody);
-    }
-    
 }
