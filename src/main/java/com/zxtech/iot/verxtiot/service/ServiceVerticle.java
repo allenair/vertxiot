@@ -10,6 +10,7 @@ import com.zxtech.iot.verxtiot.bean.TransferElevatorParameter;
 import com.zxtech.iot.verxtiot.common.LoadConfig;
 import com.zxtech.iot.verxtiot.common.RedisUtil;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.core.AbstractVerticle;
@@ -42,7 +43,7 @@ public class ServiceVerticle extends AbstractVerticle {
 			ftService.handler(getBeanByJson(msg.body().toString()));
 		});
 		ebus.consumer("/eldata").toFlowable().subscribe(msg ->{
-			Single<String> s = vertx.<String>rxExecuteBlocking(handler->{
+			Maybe<String> s = vertx.<String>rxExecuteBlocking(handler->{
 				elService.handler(getBeanByJson(msg.body().toString()));
 			}, false);
 			
